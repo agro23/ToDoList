@@ -1,8 +1,8 @@
 using System;
 
-namespace _template_.Models
+namespace ToDoList.Models
 {
-  public class _template_Model
+  public class ToDoListModel
   {
     public static string GetString()
     {

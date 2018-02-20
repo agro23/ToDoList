@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using _template_.Models;
+using ToDoList.Models;
 
-namespace _template_.Models.Tests
+namespace ToDoList.Models.Tests
 {
   [TestClass]
   public class ProjectTest
@@ -9,7 +9,7 @@ namespace _template_.Models.Tests
     [TestMethod]
     public void Test_JustATest_String()
     {
-      Assert.AreEqual("this is a string from the model", _template_Model.GetString());
+      Assert.AreEqual("this is a string from the model", ToDoListModel.GetString());
     }
   }
 }

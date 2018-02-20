@@ -10,6 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\_template_\_template_.csproj" />
+    <ProjectReference Include="..\ToDoList\ToDoList.csproj" />
   </ItemGroup>
 </Project>

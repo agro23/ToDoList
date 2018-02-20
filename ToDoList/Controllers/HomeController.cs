@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using _template_.Models;
+using ToDoList.Models;
 
-namespace _template_.Controllers
+namespace ToDoList.Controllers
 {
   public class HomeController : Controller
   {
@@ -9,7 +9,7 @@ namespace _template_.Controllers
     [HttpGet("/")]
     public ActionResult Index()
     {
-      return View("Index", _template_Model.GetString());
+      return View("Index", ToDoListModel.GetString());
     }
   }
 }
