@@ -2,31 +2,31 @@
   Layout = "_Layout";
 }
     <div class="container well">
-      <h1>City and Country List</h1>
-      <h5>Right now you can't see countries.</h5>
-        <!-- <form class="form" action="/" method="post">
+      <h1>To Do List</h1>
+      <h5>Right now you can't see Items.</h5>
+        <form class="form" action="/add" method="post">
           <div class="form-group row">
             <div class="col-lg-3">
-              <input type="text" class="form-control" name="Word" id="word" placeholder="Enter a word to find">
+              <input type="text" class="form-control" name="Item" id="new-item" placeholder="Add an item">
             </div>
             <div class="col-lg-9">
             </div>
           </div>
-          <div class="form-group row">
+          <!-- <div class="form-group row">
             <div class="col-lg-11">
               <input type="text" class="form-control col-8" name="Sentence" id="sentence" placeholder="Enter your sentence">
             </div>
             <div class="col-xl-1">
             </div>
-          </div>
+          </div> -->
           <div class="form-group row">
             <div class="col-lg-2">
-              <button type="submit" class="btn btn-success" name="button">COUNT!</button>
+              <button type="submit" class="btn btn-success" name="button">SUBMIT</button>
             </div>
             <div class="col-lg-10">
             </div>
           </div>
-        </form> -->
+        </form>
       <div class="row">
         <div class="col-xsl-11">
           @if(@Model.Count > 0)

@@ -14,7 +14,18 @@ namespace ToDoList.Controllers
     public ActionResult Index()
     {
       List<Item> Model = new List<Item> {};
+      // Model.Save;
       return View("Index", Model);
     }
+
+    [HttpPost("/add")]
+    public ActionResult AddItem()
+    {
+      Item newItem = new Item (Request.Form["new-item"]);
+      newItem.Save();
+      List<Item> allItems = Item.GetAll();
+      return View("Index", allItems);
+    }
+
   }
 }
