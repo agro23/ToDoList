@@ -26,16 +26,25 @@ namespace ToDoList
         {
             app.UseMvc(routes =>
             {
-                app.UseDeveloperExceptionPage();
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Something went horribly wrong :0");
+                await context.Response.WriteAsync("Hello World!");
             });
         }
+
     }
+
+    public static class DBConfiguration
+    {
+        public static string ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=todo;";
+        // public static string ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=todo;";
+        // ID AND PASSWORD ARE GOING TO BE WRONG!
+    }
+
 }
