@@ -14,7 +14,7 @@ namespace ToDoList.Models.Tests
         }
         public ItemTests()
         {
-            DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=todo_test;";
+            DBConfiguration.ConnectionString = "server=localhost;user id=root;password=Qsw7FaaOzOyVqz2m;port=8889;database=todo_test;";
         }
 
         [TestMethod]

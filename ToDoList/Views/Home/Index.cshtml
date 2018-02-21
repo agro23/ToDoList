@@ -12,13 +12,7 @@
             <div class="col-lg-9">
             </div>
           </div>
-          <!-- <div class="form-group row">
-            <div class="col-lg-11">
-              <input type="text" class="form-control col-8" name="Sentence" id="sentence" placeholder="Enter your sentence">
-            </div>
-            <div class="col-xl-1">
-            </div>
-          </div> -->
+
           <div class="form-group row">
             <div class="col-lg-2">
               <button type="submit" class="btn btn-success" name="button">SUBMIT</button>
@@ -31,9 +25,9 @@
         <div class="col-xsl-11">
           @if(@Model.Count > 0)
           {
-            @foreach(var item in Model)
+            @foreach (var item in Model)
             {
-              <li>@item</li>
+                <h4>@item.GetDescription() | <a href="/items/@item.GetId()/update">Edit</a></h4>
             }
           }
         </div>
