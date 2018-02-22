@@ -10,6 +10,7 @@ namespace ToDoList.Models
     private int _id;
     private string _description;
 
+    // public Item(string Description, int Id = 0)
     public Item(string Description, int Id = 0)
     {
       _id = Id;
@@ -29,6 +30,11 @@ namespace ToDoList.Models
       bool descriptionEquality = (this.GetDescription() == newItem.GetDescription());
       return (idEquality && descriptionEquality);
       }
+    }
+
+    public override int GetHashCode()
+    {
+      return this.GetDescription().GetHashCode();
     }
 
     //...GETTERS AND SETTERS WILL GO HERE...
@@ -73,14 +79,31 @@ namespace ToDoList.Models
 
            var cmd = conn.CreateCommand() as MySqlCommand;
            cmd.CommandText = @"DELETE FROM items;";
+           try
+           {
+             cmd.ExecuteNonQuery();
+           }
+           catch (Exception ex)
+           {
+             Console.WriteLine("Exception 1: " + ex);
+           }
 
-           cmd.ExecuteNonQuery();
+           cmd.CommandText = @"ALTER TABLE items AUTO_INCREMENT = 0;";
+           try
+           {
+             cmd.ExecuteNonQuery();
+           }
+           catch (Exception ex)
+           {
+             Console.WriteLine("Exception 2: " + ex);
+           }
 
            conn.Close();
            if (conn != null)
            {
                conn.Dispose();
            }
+
         }
 
         public void Save()
@@ -94,10 +117,39 @@ namespace ToDoList.Models
           MySqlParameter description = new MySqlParameter();
           description.ParameterName = "@ItemDescription";
           description.Value = this._description;
-          cmd.Parameters.Add(description);
 
-          cmd.ExecuteNonQuery();
-          _id = (int) cmd.LastInsertedId;
+          Console.WriteLine("id.Value = " + this._id);
+          Console.WriteLine("description.Value = " + this._description);
+
+          try
+                {
+                  cmd.Parameters.Add(description);
+                }
+                catch (Exception ex)
+                {
+                  Console.WriteLine("Exception 1: " + ex);
+                }
+
+          try
+                {
+                  cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                  Console.WriteLine("Exception 2: " + ex);
+                }
+
+          try
+                {
+                  _id = (int) cmd.LastInsertedId;
+                }
+                catch (Exception ex)
+                {
+                  Console.WriteLine("Exception 3: " + ex);
+                }
+
+
+          Console.WriteLine("_id = " + this._id);
 
          conn.Close();
          if (conn != null)
@@ -129,6 +181,20 @@ namespace ToDoList.Models
 
             while (rdr.Read())
             {
+              // if (!rdr.IsDBNull(0))
+              // {
+              //   itemId = rdr.GetInt32(0);
+              // } else
+              // {
+              //   itemId = 0;
+              // }
+              // if (!rdr.IsDBNull(1))
+              // {
+              //   itemDescription = rdr.GetString(1);
+              // } else
+              // {
+              //   itemDescription = "";
+              // }
                itemId = rdr.GetInt32(0);
                itemDescription = rdr.GetString(1);
             }
@@ -141,9 +207,8 @@ namespace ToDoList.Models
                conn.Dispose();
             }
 
-            return foundItem;  
-
-         }
+            return foundItem;
+          }
 
 //...
   }

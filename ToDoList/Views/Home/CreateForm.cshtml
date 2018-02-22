@@ -1,0 +1,13 @@
+@{
+  Layout = "_Layout";
+}
+
+<h1>To Do List</h1>
+<h1>Add a new item:</h1>
+<form action='/items' method='post'>
+  <label for='new-item'>Item description</label>
+  <input id='new-item' name='new-item' type='text'>
+  <label for='new-item-date'>Item description</label>
+  <input id='new-item-date' name='new-item-date' type='date'>
+  <button type='submit'>Add item</button>
+</form>

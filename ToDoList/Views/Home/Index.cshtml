@@ -1,43 +1,18 @@
 @{
   Layout = "_Layout";
 }
-    <div class="container well">
-      <h1>To Do List</h1>
-      <h5>Right now you can't see Items.</h5>
-        <form class="form" action="/add" method="post">
-          <div class="form-group row">
-            <div class="col-lg-3">
-              <input type="text" class="form-control" name="Item" id="new-item" placeholder="Add an item">
-            </div>
-            <div class="col-lg-9">
-            </div>
-          </div>
 
-          <div class="form-group row">
-            <div class="col-lg-2">
-              <button type="submit" class="btn btn-success" name="button">SUBMIT</button>
-            </div>
-            <div class="col-lg-10">
-            </div>
-          </div>
-        </form>
-      <div class="row">
-        <div class="col-xsl-11">
-          @if(@Model.Count > 0)
-          {
-            @foreach (var item in Model)
-            {
-                <h4>@item.GetDescription() | <a href="/items/@item.GetId()/update">Edit</a></h4>
-            }
-          }
-        </div>
-          <div class="col-xl-1">
-        </div>
-      </div>
-      <!-- <div class="row">
-        <div class="col-xsl-11">
-          <h3><a href="/country">Go To Country List</a></h3>
-        </div>
-          <div class="col-xl-1">
-          </div>
-      </div> -->
+<h1>To Do List</h1>
+<ul>
+@foreach (var item in Model)
+{
+  <h4>@item.GetDescription() ** <a href="/items/@item.GetId()/update">Edit</a> ** <a href="/items/@item.GetId()/delete">Delete</a></h4>
+}
+</ul>
+
+<!-- <h3><a href='/categories'>View categories</a></h3>
+<h3><a href='/categories/new'>Add a new category</a></h3> -->
+<p><a href="/items/new">Add new item</a></p>
+<form action="/items/delete" method="post">
+  <button type="submit" name="button">Clear All Items</button>
+</form>

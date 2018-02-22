@@ -1,0 +1,7 @@
+@{
+  Layout = "_Layout";
+}
+
+<h1>@Model["item"].GetDescription()</h1>
+<a href='/categories/@Model["category"].GetId()/items/new'>Add another item</a><br>
+<a href='/items'>View all items</a>

@@ -17,6 +17,18 @@ The project for the database week of C#. Rules to follow.
 
 * Test Save and other functions.
 
+* Build a feature to let users enter a due date when they create a new item:
+  - Add date input to Form
+  - Add date field to item db and item_test db
+  - test date field exists
+  - test date field takes input
+  - Add date field code to Home Controller to enter it into the database when item is Created.
+    * note that a null field should be accounted for.
+
+* Allow user to order db by date using ORDER BY  
+
+* Test
+
 * Refactor code as needed.
 
 ## Setup/Installation Requirements

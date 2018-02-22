@@ -34,7 +34,7 @@ namespace ToDoList
             app.UseStaticFiles();
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Hello World!");
+                await context.Response.WriteAsync("Page Not Found!");
             });
         }
 
@@ -42,8 +42,8 @@ namespace ToDoList
 
     public static class DBConfiguration
     {
-        // public static string ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=todo;";
-        public static string ConnectionString = "server=localhost;user id=root;password=Qsw7FaaOzOyVqz2m;port=8889;database=todo;";
+        // public static string ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=to_do;";
+        public static string ConnectionString = "server=localhost;user id=root;password=Qsw7FaaOzOyVqz2m;port=8889;database=to_do;";
               // ID AND PASSWORD ARE GOING TO BE WRONG!        // ID AND PASSWORD ARE GOING TO BE WRONG!
     }
 
