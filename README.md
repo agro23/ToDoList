@@ -18,7 +18,7 @@ The project for the database week of C#. Rules to follow.
 * Test Save and other functions.
 
 * Build a feature to let users enter a due date when they create a new item:
-  - Add date input to Form
+  - Add date input to Form <--
   - Add date field to item db and item_test db
   - test date field exists
   - test date field takes input
