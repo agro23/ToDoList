@@ -10,6 +10,7 @@ body {
 
 .well {
   background: linear-gradient(gray, white);
+  margin: 1em;
 }
 
 .row {

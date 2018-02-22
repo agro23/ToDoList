@@ -68,13 +68,19 @@ namespace ToDoList.Controllers
       [HttpPost("/items")]
       public ActionResult Create()
       {
-        Item newItem = new Item (Request.Form["new-item"]);
+        string x = Request.Form["new-item-date"];
+        string[] x1 = x.Split('-');
+        DateTime x2 = new DateTime(int.Parse(x1[0]), int.Parse(x1[1]), int.Parse(x1[2])).Date;
+        Item newItem = new Item (Request.Form["new-item"], x2); // *****
         Console.WriteLine("I'm in Create()");
-        Console.WriteLine("The details are: " + Request.Form["new-item"]);
+        Console.WriteLine("The details are: " + Request.Form["new-item"] + " AND " + Request.Form["new-item-date"]); // *****
+        //
         newItem.Save();
         List<Item> allItems = Item.GetAll();
         // return RedirectToAction("Index");
         return View("Index", allItems);
+        // return View();
+
       }
 
       [HttpGet("/items/{id}")]
