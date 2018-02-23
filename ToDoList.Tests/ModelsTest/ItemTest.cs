@@ -44,8 +44,9 @@ namespace ToDoList.Models.Tests
         public void Equals_ReturnsTrueIfDescriptionsAreTheSame_Item()
         {
           // Arrange, Act
-          Item firstItem = new Item("Mow the lawn");
-          Item secondItem = new Item("Mow the lawn");
+          DateTime fred = new DateTime(2000, 01, 01);
+          Item firstItem = new Item("Mow the lawn", fred);
+          Item secondItem = new Item("Mow the lawn", fred);
 
           // Assert
           Assert.AreEqual(firstItem, secondItem);
@@ -55,7 +56,8 @@ namespace ToDoList.Models.Tests
         public void Save_SavesToDatabase_ItemList()
         {
           //Arrange
-          Item testItem = new Item("Mow the lawn");
+          DateTime fred = new DateTime(2000, 01, 01);
+          Item testItem = new Item("Mow the lawn", fred);
 
           //Act
           testItem.Save();
@@ -70,7 +72,8 @@ namespace ToDoList.Models.Tests
         public void Save_AssignsIdToObject_Id()
         {
           //Arrange
-          Item testItem = new Item("Mow the lawn");
+          DateTime fred = new DateTime(2000, 01, 01);
+          Item testItem = new Item("Mow the lawn", fred);
 
           //Act
           testItem.Save();
@@ -87,7 +90,8 @@ namespace ToDoList.Models.Tests
         public void Find_FindsItemInDatabase_Item()
         {
           //Arrange
-          Item testItem = new Item("Mow the lawn");
+          DateTime fred = new DateTime(2000, 01, 01);
+          Item testItem = new Item("Mow the lawn", fred);
           testItem.Save();
 
           //Act
@@ -95,6 +99,26 @@ namespace ToDoList.Models.Tests
 
           //Assert
           Assert.AreEqual(testItem, foundItem);
+        }
+
+        [TestMethod]
+        public void Edit_UpdatesItemInDatabase_String()
+        {
+          //Arrange
+
+          string firstDescription = "Walk the Dog";
+          DateTime fred = new DateTime(2000, 01, 01);
+          Item testItem = new Item(firstDescription, fred, 1);
+          testItem.Save();
+          string secondDescription = "Mow the lawn";
+
+          //Act
+          testItem.Edit(secondDescription);
+
+          string result = Item.Find(testItem.GetId()).GetDescription();
+
+          //Assert
+          Assert.AreEqual(secondDescription , result);
         }
 
     }

@@ -52,7 +52,7 @@ namespace ToDoList.Models
       return _description;
     }
 
-    public DateTime GetDate() // ******
+    public DateTime GetDate()
     {
       return _date;
     }
@@ -90,8 +90,12 @@ namespace ToDoList.Models
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
             // cmd.CommandText = @"SELECT * FROM items;";
+
+
             cmd.CommandText = @"SELECT * FROM items ORDER BY date DESC;";
 
+            try
+            {
             MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
             while(rdr.Read())
             {
@@ -100,6 +104,11 @@ namespace ToDoList.Models
               DateTime itemDate = rdr.GetDateTime(2).Date; // is it okay to get a DATE from a db as String?
               Item newItem = new Item(itemDescription, itemDate.Date, itemId);
               allItems.Add(newItem);
+            }
+            }
+            catch (Exception ex)
+            {
+              Console.WriteLine("Exception Descending: " + ex);
             }
             conn.Close();
             if (conn != null)
@@ -159,27 +168,10 @@ namespace ToDoList.Models
 
           MySqlParameter date = new MySqlParameter();
           date.ParameterName = "@ItemDate";
-
-          // ***************************************************************
-          // This is where the conversion to DateTime has to happen!
-          // DateTime value = new DateTime(2017, 1, 18);
-          // where 2017,1,18 is actually a split of the string as an array
-          // and then written into it as DateTime tempDate = new DateTime(tempString[0], teempString[1], tempString[2]);
-          // but that means that when I get the date back from the db I also have to convert it on presentation!
-          //
-          // string[] tempString = this._date.Split('-');
-          // Console.WriteLine("The pieces of tempString are: " + tempString[0] + " " + tempString[1] + " " + tempString[2] );
-          // // DateTime tempDate = DateTime(int.Parse(tempChars[0]), int.Parse(tempChars[1]), int.Parse(tempChars[2]));
-          // DateTime tempDate = new DateTime(2018, 06, 07);
-          // date.Value =tempDate;
           date.Value = this._date;
-          // **************************************************************
-
           Console.WriteLine("id.Value = " + this._id);
           Console.WriteLine("description.Value = " + this._description);
           Console.WriteLine("date.Value = " + this._date); // ******
-          // Console.WriteLine("date.Value = " + tempDate); // ******
-
 
           try
                 {
@@ -209,7 +201,6 @@ namespace ToDoList.Models
                   Console.WriteLine("Exception 3: " + ex);
                 }
 
-
           Console.WriteLine("_id = " + this._id);
 
          conn.Close();
@@ -235,34 +226,54 @@ namespace ToDoList.Models
             thisId.Value = id;
             cmd.Parameters.Add(thisId);
 
-            var rdr = cmd.ExecuteReader() as MySqlDataReader;
+            // try
+            // {
+            //   var rdr = cmd.ExecuteReader() as MySqlDataReader;
+            // }
+            //   catch (Exception ex)
+            // {
+            //   Console.WriteLine("Find() Exception: " + ex);
+            // }
 
+            Console.WriteLine("Got this far in Find!");
             int itemId = 0;
             string itemDescription = "";
             DateTime itemDate = new DateTime(2000,01,01); // *******
 
-            while (rdr.Read())
+            try
             {
-              // if (!rdr.IsDBNull(0))
-              // {
-              //   itemId = rdr.GetInt32(0);
-              // } else
-              // {
-              //   itemId = 0;
-              // }
-              // if (!rdr.IsDBNull(1))
-              // {
-              //   itemDescription = rdr.GetString(1);
-              // } else
-              // {
-              //   itemDescription = "";
-              // }
-               itemId = rdr.GetInt32(0);
-               itemDescription = rdr.GetString(1);
-               itemDate = rdr.GetDateTime(2); // *******
+            var rdr = cmd.ExecuteReader() as MySqlDataReader;
+              while (rdr.Read())
+              {
+                // if (!rdr.IsDBNull(0))
+                // {
+                //   itemId = rdr.GetInt32(0);
+                // } else
+                // {
+                //   itemId = 0;
+                // }
+                // if (!rdr.IsDBNull(1))
+                // {
+                //   itemDescription = rdr.GetString(1);
+                // } else
+                // {
+                //   itemDescription = "";
+                // }
+                 itemId = rdr.GetInt32(0);
+                 itemDescription = rdr.GetString(1);
+                 itemDate = rdr.GetDateTime(2); // *******
+              }
+            }
+            catch (Exception ex)
+            {
+              Console.WriteLine("Find() Exception: " + ex);
             }
 
-            Item foundItem= new Item(itemDescription, itemDate, itemId); // ***
+            Console.WriteLine("itemDescription = " + itemDescription);
+            Console.WriteLine("itemDate = " + itemDate);
+            Console.WriteLine("itemId = " + itemId);
+            Item foundItem= new Item(itemDescription, itemDate, itemId);
+
             conn.Close();
             if (conn != null)
             {
@@ -270,6 +281,62 @@ namespace ToDoList.Models
             }
 
             return foundItem;
+          }
+
+
+          public void Edit(string newDescription)
+          {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"UPDATE items SET description = @newDescription WHERE id = @searchId;";
+
+            MySqlParameter searchId = new MySqlParameter();
+            searchId.ParameterName = "@searchId";
+            searchId.Value = _id;
+            cmd.Parameters.Add(searchId);
+
+            MySqlParameter description = new MySqlParameter();
+            description.ParameterName = "@newDescription";
+            description.Value = newDescription;
+            cmd.Parameters.Add(description);
+
+            cmd.ExecuteNonQuery();
+            _description = newDescription;
+
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+          }
+
+          public void Delete(int Id)
+          {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            // cmd.CommandText = @"UPDATE items SET description = @newDescription WHERE id = @searchId;";
+            cmd.CommandText = @"DELETE FROM items WHERE id = @thisId;";
+
+            MySqlParameter thisId = new MySqlParameter();
+            thisId.ParameterName = "@thisId";
+            thisId.Value = Id;
+            cmd.Parameters.Add(thisId);
+            //
+            // MySqlParameter description = new MySqlParameter();
+            // description.ParameterName = "@newDescription";
+            // description.Value = newDescription;
+            // cmd.Parameters.Add(description);
+
+            cmd.ExecuteNonQuery();
+            // _description = newDescription;
+
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
           }
 
 //...

@@ -44,9 +44,12 @@ namespace ToDoList.Controllers
       [HttpGet("/")]
       public ActionResult Index()
       {
-        List<Item> Model = new List<Item> {};
-        // Model.Save;
-        return View("Index", Model);
+      //   List<Item> Model = new List<Item> {};
+      //   // Model.Save;
+      //   return View("Index", Model);
+      List<Item> allItems = Item.GetAll();
+      Console.WriteLine("I'm in ItemsIndex()");
+      return View("Index", allItems);
       }
 
       [HttpGet("/items")]
@@ -73,11 +76,11 @@ namespace ToDoList.Controllers
         return View("IndexByDesc", allItems);
       }
 
-
       [HttpGet("/items/new")]
       public ActionResult CreateForm()
       {
         Console.WriteLine("I'm in CreateForm()");
+          // return View("Index");
           return View();
       }
 
@@ -110,104 +113,36 @@ namespace ToDoList.Controllers
       [HttpGet("/items/{id}/update")]
       public ActionResult UpdateForm(int id)
       {
-        Console.WriteLine("I'm in Update()");
-          Item thisItem = Item.Find(id);
-          return View(thisItem);
+        Console.WriteLine("I'm in Update() and ID is " + id);
+          Item item = Item.Find(id);
+          return View("Update", item);
       }
 
-      // [HttpPost("/items/{id}/update")]
-      // public ActionResult Update(int id)
-      // {
-      //     Item thisItem = Item.Find(id);
-      //     thisItem.Edit(Request.Form["newname"]);
-      //     return RedirectToAction("Index");
-      // }
+      [HttpPost("/items/{id}/update")]
+      public ActionResult Update(int id)
+      {
+          Item thisItem = Item.Find(id);
+          thisItem.Edit(Request.Form["new-name"]);
+          return RedirectToAction("Index");
+      }
+
+      [HttpGet("/items/{id}/delete")]
+      public ActionResult Delete(int id)
+      {
+          Item thisItem = Item.Find(id);
+          thisItem.Delete(thisItem.GetId());
+          return RedirectToAction("Index");
+      }
+
 
       [HttpPost("/items/delete")]
       public ActionResult DeleteAll()
       {
-        Console.WriteLine("I'm in CreateForm()");
+        Console.WriteLine("I'm in DeleteALL()");
           Item.DeleteAll();
           return View();
       }
 
-
-
-
-
   }
 
-  // public class ItemsController : Controller
-  //   {
-  //
-  //     [HttpGet("/")]
-  //     public ActionResult Index()
-  //     {
-  //       // List<Item> Model = new List<Item> {};
-  //       // Model.Save();
-  //       return View();
-  //     }
-
-      // [Route("/")]
-      // public ActionResult Index()
-      // // {
-      // //     List<Item> allItems = Item.GetAll();
-      // //     return View(allItems);
-      // // }
-      // {
-      //   return View();
-      // }
-
-        //
-        // [HttpGet("/items")]
-        // public ActionResult ItemsIndex()
-        // {
-        //     List<Item> allItems = Item.GetAll();
-        //     return View("Index", allItems);
-        // }
-        //
-        // [HttpGet("/items/new")]
-        // public ActionResult CreateForm()
-        // {
-        //     return View();
-        // }
-        // [HttpPost("/items")]
-        // public ActionResult Create()
-        // {
-        //   Item newItem = new Item (Request.Form["new-item"]);
-        //   newItem.Save();
-        //   List<Item> allItems = Item.GetAll();
-        //   return RedirectToAction("Index");
-        // }
-        //
-        // [HttpGet("/items/{id}")]
-        // public ActionResult Details(int id)
-        // {
-        //     Item item = Item.Find(id);
-        //     return View(item);
-        // }
-        //
-        // [HttpGet("/items/{id}/update")]
-        // public ActionResult UpdateForm(int id)
-        // {
-        //     Item thisItem = Item.Find(id);
-        //     return View(thisItem);
-        // }
-        //
-        // // [HttpPost("/items/{id}/update")]
-        // // public ActionResult Update(int id)
-        // // {
-        // //     Item thisItem = Item.Find(id);
-        // //     thisItem.Edit(Request.Form["newname"]);
-        // //     return RedirectToAction("Index");
-        // // }
-        //
-        // [HttpPost("/items/delete")]
-        // public ActionResult DeleteAll()
-        // {
-        //     Item.DeleteAll();
-        //     return View();
-        // }
-
-    // }
 }

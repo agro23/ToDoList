@@ -28,6 +28,10 @@ The project for the database week of C#. Rules to follow.
 
 * Allow user to order db by date using ORDER BY  
 
+* Add Edit function
+
+* Add Delete function
+
 * Time to add Categories and work on One to Many and Many to Many relationships! <--
 
 * Test
