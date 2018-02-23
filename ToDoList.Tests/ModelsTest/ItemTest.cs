@@ -45,8 +45,8 @@ namespace ToDoList.Models.Tests
         {
           // Arrange, Act
           DateTime fred = new DateTime(2000, 01, 01);
-          Item firstItem = new Item("Mow the lawn", fred);
-          Item secondItem = new Item("Mow the lawn", fred);
+          Item firstItem = new Item("Mow the lawn", fred, 1);
+          Item secondItem = new Item("Mow the lawn", fred, 1);
 
           // Assert
           Assert.AreEqual(firstItem, secondItem);
@@ -57,7 +57,7 @@ namespace ToDoList.Models.Tests
         {
           //Arrange
           DateTime fred = new DateTime(2000, 01, 01);
-          Item testItem = new Item("Mow the lawn", fred);
+          Item testItem = new Item("Mow the lawn", fred, 1);
 
           //Act
           testItem.Save();
@@ -73,7 +73,7 @@ namespace ToDoList.Models.Tests
         {
           //Arrange
           DateTime fred = new DateTime(2000, 01, 01);
-          Item testItem = new Item("Mow the lawn", fred);
+          Item testItem = new Item("Mow the lawn", fred, 1);
 
           //Act
           testItem.Save();
@@ -91,7 +91,7 @@ namespace ToDoList.Models.Tests
         {
           //Arrange
           DateTime fred = new DateTime(2000, 01, 01);
-          Item testItem = new Item("Mow the lawn", fred);
+          Item testItem = new Item("Mow the lawn", fred, 1);
           testItem.Save();
 
           //Act
@@ -108,7 +108,7 @@ namespace ToDoList.Models.Tests
 
           string firstDescription = "Walk the Dog";
           DateTime fred = new DateTime(2000, 01, 01);
-          Item testItem = new Item(firstDescription, fred, 1);
+          Item testItem = new Item(firstDescription, fred, 1, 1);
           testItem.Save();
           string secondDescription = "Mow the lawn";
 
@@ -123,6 +123,87 @@ namespace ToDoList.Models.Tests
 
     }
 
+//***************************************************
+
+// 
+// using Microsoft.VisualStudio.TestTools.UnitTesting;
+// using System.Collections.Generic;
+// using System;
+// using ToDoList.Models;
+//
+// namespace ToDoList.Tests
+// {
+//
+//     [TestClass]
+//     public class ItemTests : IDisposable
+//     {
+//         public ItemTests()
+//         {
+//             DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=3306;database=todo_test;";
+//         }
+//         public void Dispose()
+//         {
+//           Item.DeleteAll();
+//           Category.DeleteAll();
+//         }
+//
+//         [TestMethod]
+//         public void Equals_OverrideTrueForSameDescription_Item()
+//         {
+//           //Arrange, Act
+//           Item firstItem = new Item("Mow the lawn", 1);
+//           Item secondItem = new Item("Mow the lawn", 1);
+//
+//           //Assert
+//           Assert.AreEqual(firstItem, secondItem);
+//         }
+//
+//         [TestMethod]
+//         public void Save_SavesItemToDatabase_ItemList()
+//         {
+//           //Arrange
+//           Item testItem = new Item("Mow the lawn", 1);
+//           testItem.Save();
+//
+//           //Act
+//           List<Item> result = Item.GetAll();
+//           List<Item> testList = new List<Item>{testItem};
+//
+//           //Assert
+//           CollectionAssert.AreEqual(testList, result);
+//         }
+//        [TestMethod]
+//         public void Save_DatabaseAssignsIdToObject_Id()
+//         {
+//           //Arrange
+//           Item testItem = new Item("Mow the lawn", 1);
+//           testItem.Save();
+//
+//           //Act
+//           Item savedItem = Item.GetAll()[0];
+//
+//           int result = savedItem.GetId();
+//           int testId = testItem.GetId();
+//
+//           //Assert
+//           Assert.AreEqual(testId, result);
+//         }
+//
+//         [TestMethod]
+//         public void Find_FindsItemInDatabase_Item()
+//         {
+//           //Arrange
+//           Item testItem = new Item("Mow the lawn", 1);
+//           testItem.Save();
+//
+//           //Act
+//           Item foundItem = Item.Find(testItem.GetId());
+//
+//           //Assert
+//           Assert.AreEqual(testItem, foundItem);
+//         }
+//     }
+// }
 
   // [TestClass]
   // public class ProjectTest

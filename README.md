@@ -48,7 +48,7 @@ The project for the database week of C#. Rules to follow.
 
 ## Support and contact details
 
-* Contact the authors at andy.grossberg@gmail.com or jasun.feddema@gmail.com
+* Contact the authors at andy.grossberg@gmail.com 
 
 ## Technologies Used
 

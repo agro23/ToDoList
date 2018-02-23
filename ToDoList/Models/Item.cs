@@ -9,12 +9,14 @@ namespace ToDoList.Models
   {
     private int _id;
     private string _description;
-    private DateTime _date; // *********
+    private DateTime _date;
+    private int _categoryId;
 
     // public Item(string Description, int Id = 0)
-    public Item(string Description, DateTime Date, int Id = 0)
+    public Item(string Description, DateTime Date, int CategoryId, int Id = 0)
     {
       _id = Id;
+      _categoryId = CategoryId;
       _description = Description;
       _date = Date; // ******
     }
@@ -31,7 +33,8 @@ namespace ToDoList.Models
       bool idEquality = (this.GetId() == newItem.GetId());
       bool descriptionEquality = (this.GetDescription() == newItem.GetDescription());
       bool dateEquality = (this.GetDate() == newItem.GetDate()); // *******
-      return (idEquality && descriptionEquality && dateEquality); // ******
+      bool categoryEquality = this.GetCategoryId() == newItem.GetCategoryId();
+      return (idEquality && categoryEquality && descriptionEquality && dateEquality); // ******
       }
     }
 
@@ -45,6 +48,11 @@ namespace ToDoList.Models
     public int GetId()
     {
       return _id;
+    }
+
+    public int GetCategoryId()
+    {
+        return _categoryId;
     }
 
     public string GetDescription()
@@ -72,7 +80,8 @@ namespace ToDoList.Models
               int itemId = rdr.GetInt32(0);
               string itemDescription = rdr.GetString(1);
               DateTime itemDate = rdr.GetDateTime(2).Date; // is it okay to get a DATE from a db as String?
-              Item newItem = new Item(itemDescription, itemDate.Date, itemId);
+              int itemCategoryId = rdr.GetInt32(3);
+              Item newItem = new Item(itemDescription, itemDate.Date, itemCategoryId, itemId);
               allItems.Add(newItem);
             }
             conn.Close();
@@ -102,7 +111,8 @@ namespace ToDoList.Models
               int itemId = rdr.GetInt32(0);
               string itemDescription = rdr.GetString(1);
               DateTime itemDate = rdr.GetDateTime(2).Date; // is it okay to get a DATE from a db as String?
-              Item newItem = new Item(itemDescription, itemDate.Date, itemId);
+              int itemCategoryId = rdr.GetInt32(3);
+              Item newItem = new Item(itemDescription, itemDate.Date, itemCategoryId, itemId);
               allItems.Add(newItem);
             }
             }
@@ -160,7 +170,7 @@ namespace ToDoList.Models
 
           var cmd = conn.CreateCommand() as MySqlCommand;
           // cmd.CommandText = @"INSERT INTO `items` (`description`) VALUES (@ItemDescription);";
-          cmd.CommandText = @"INSERT INTO `items` (`description`, `date`) VALUES (@ItemDescription, @ItemDate);";
+          cmd.CommandText = @"INSERT INTO `items` (`description`, `date`, `category_id`) VALUES (@ItemDescription, @ItemDate, @category_id);";
 
           MySqlParameter description = new MySqlParameter();
           description.ParameterName = "@ItemDescription";
@@ -173,10 +183,15 @@ namespace ToDoList.Models
           Console.WriteLine("description.Value = " + this._description);
           Console.WriteLine("date.Value = " + this._date); // ******
 
+          MySqlParameter categoryId = new MySqlParameter();
+          categoryId.ParameterName = "@category_id";
+          categoryId.Value = this._categoryId;
+
           try
                 {
                   cmd.Parameters.Add(description);
                   cmd.Parameters.Add(date);
+                  cmd.Parameters.Add(categoryId);
                 }
                 catch (Exception ex)
                 {
@@ -239,6 +254,7 @@ namespace ToDoList.Models
             int itemId = 0;
             string itemDescription = "";
             DateTime itemDate = new DateTime(2000,01,01); // *******
+            int itemCategoryId = 0;
 
             try
             {
@@ -262,6 +278,7 @@ namespace ToDoList.Models
                  itemId = rdr.GetInt32(0);
                  itemDescription = rdr.GetString(1);
                  itemDate = rdr.GetDateTime(2); // *******
+                 itemCategoryId = rdr.GetInt32(0);
               }
             }
             catch (Exception ex)
@@ -271,8 +288,9 @@ namespace ToDoList.Models
 
             Console.WriteLine("itemDescription = " + itemDescription);
             Console.WriteLine("itemDate = " + itemDate);
+            Console.WriteLine("itemCategoryId = " + itemCategoryId);
             Console.WriteLine("itemId = " + itemId);
-            Item foundItem= new Item(itemDescription, itemDate, itemId);
+            Item foundItem= new Item(itemDescription, itemDate, itemCategoryId, itemId);
 
             conn.Close();
             if (conn != null)

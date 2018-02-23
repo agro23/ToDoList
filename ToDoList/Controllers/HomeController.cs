@@ -90,7 +90,7 @@ namespace ToDoList.Controllers
         string x = Request.Form["new-item-date"];
         string[] x1 = x.Split('-');
         DateTime x2 = new DateTime(int.Parse(x1[0]), int.Parse(x1[1]), int.Parse(x1[2])).Date;
-        Item newItem = new Item (Request.Form["new-item"], x2); // *****
+        Item newItem = new Item (Request.Form["new-item"], x2, 1); // *****
         Console.WriteLine("I'm in Create()");
         Console.WriteLine("The details are: " + Request.Form["new-item"] + " AND " + Request.Form["new-item-date"]); // *****
         //
