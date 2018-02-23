@@ -10,7 +10,6 @@ namespace ToDoList.Controllers
   public class HomeController : Controller
   {
 
-
     // [HttpPost("/add")]
     // public ActionResult AddItem()
     // {
@@ -57,6 +56,23 @@ namespace ToDoList.Controllers
           Console.WriteLine("I'm in ItemsIndex()");
           return View("Index", allItems);
       }
+
+      [HttpGet("/date/asc")]
+      public ActionResult ToggleDateIndexAsc()
+      {
+        List<Item> allItems = Item.GetAll();
+        Console.WriteLine("Toggle Positive");
+        return View("IndexByAsc", allItems);
+      }
+
+      [HttpGet("/date/desc")]
+      public ActionResult ToggleDateIndexDesc()
+      {
+        List<Item> allItems = Item.GetAllDesc();
+        Console.WriteLine("Toggle Negative");
+        return View("IndexByDesc", allItems);
+      }
+
 
       [HttpGet("/items/new")]
       public ActionResult CreateForm()

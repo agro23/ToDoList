@@ -63,7 +63,9 @@ namespace ToDoList.Models
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT * FROM items;";
+            // cmd.CommandText = @"SELECT * FROM items;";
+            cmd.CommandText = @"SELECT * FROM items ORDER BY date ASC;";
+
             MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
             while(rdr.Read())
             {
@@ -80,6 +82,33 @@ namespace ToDoList.Models
             }
             return allItems;
         }
+
+        public static List<Item> GetAllDesc()
+        {
+            List<Item> allItems = new List<Item> {};
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+            // cmd.CommandText = @"SELECT * FROM items;";
+            cmd.CommandText = @"SELECT * FROM items ORDER BY date DESC;";
+
+            MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+            while(rdr.Read())
+            {
+              int itemId = rdr.GetInt32(0);
+              string itemDescription = rdr.GetString(1);
+              DateTime itemDate = rdr.GetDateTime(2).Date; // is it okay to get a DATE from a db as String?
+              Item newItem = new Item(itemDescription, itemDate.Date, itemId);
+              allItems.Add(newItem);
+            }
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+            return allItems;
+        }
+
 
         public static void DeleteAll()
         {

@@ -26,7 +26,9 @@ The project for the database week of C#. Rules to follow.
     * note that a null field should be accounted for.
     * Note that TIME cannot be trimmed out at the moment.
 
-* Allow user to order db by date using ORDER BY  <--
+* Allow user to order db by date using ORDER BY  
+
+* Time to add Categories and work on One to Many and Many to Many relationships! <--
 
 * Test
 
